@@ -447,7 +447,7 @@ function tab(c){const L=els(c);return `<div class="tab n${L.length}" style="--tb
 function build(c){const d=document.createElement('div');const st=c.atk!=null&&c.hp!=null;d.className='card '+(st?'st':'ns');
  d.innerHTML=`<img class="frame" src="${frameFile(c.el,st,c.name)}"><img class="fr2" src="${frameFile(c.el,st,c.name)}"><img class="fr3" src="${frameFile(c.el,st,c.name)}">${tab(c)}<img class="art${c.name==='Convergence Elemental'?' art-top':''}" loading="lazy" src="${(window.ART_MAP||{})[c.name]||''}" alt="">
  <div class="name"><div class="t">${esc(c.name)}</div><div class="gems">${gems(c.cost)}</div></div>
- <div class="type"><span>${esc(c.subtype||c.type)}</span></div><div class="rar r-${c.rarity} e-${c.el}"></div>
+ <div class="type"><span>${esc((c.subtype||c.type).replace(/\s*—\s*/g,' - '))}</span></div><div class="rar r-${c.rarity} e-${c.el}"></div>
  ${st?`<div class="atk">${c.atk}</div><div class="hp">${c.hp}</div>`:''}
  <div class="rules">${esc(c.text||'')}</div><div class="slot"></div>`;
  d.onclick=()=>zoom(c);return d}
