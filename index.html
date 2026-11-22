@@ -32,7 +32,7 @@ select,input{font-size:15px;padding:6px;background:#26262e;color:#eee;border:1px
 .atk,.hp{top:53.095%;height:4.762%;z-index:3;display:flex;align-items:center;font-family:Cinzel;font-weight:700;font-size:4.27cqw;color:#1c1612}
 .atk{right:57.6%}.hp{left:57.87%}
 .rules{left:6%;top:59.048%;width:88%;height:22.857%;z-index:3;padding:3cqw 3.3cqw 1cqw;box-sizing:border-box;font-family:Corm;font-weight:500;color:#1c1612;line-height:1.2;white-space:pre-wrap;overflow:hidden}
-.slot{left:calc(6% + .13cqw);top:81.905%;width:calc(88% - .27cqw);height:11.33%;background:#202024;z-index:3;border-radius:0 0 1.1cqw 1.1cqw}.card.ae2 .rules{height:auto;bottom:28.7%}.card.ae2 .slot{visibility:hidden}.ae-slots{position:absolute;left:6.15%;width:87.7%;top:71.8%;height:20.7%;z-index:4;display:flex;flex-direction:column;gap:1.2cqw;box-sizing:border-box;pointer-events:none}.ae-strip{flex:1;box-sizing:border-box;background:#deceb2;border:.35cqw solid #9aa0a8;border-radius:1cqw;position:relative;box-shadow:inset 0 0 0 .1cqw rgba(255,255,255,.35),0 .12cqw .25cqw rgba(0,0,0,.12)}.ae-strip::after{content:'';position:absolute;left:3%;right:3%;top:38%;height:.22cqw;background:#9aa0a8;opacity:.85}
+.slot{left:calc(6% + .13cqw);top:81.905%;width:calc(88% - .27cqw);height:11.33%;background:#202024;z-index:3;border-radius:0 0 1.1cqw 1.1cqw}.card.card.card.card.card.ae2 .slot-extra{top:74.32%!important;border-radius:0}.card.ae2 .rules{height:auto;bottom:25.68%}
 #modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:10}
 #modal .card{width:min(92vw,calc(92vh*1500/2100))}
 h2{font-family:Cinzel;padding:0 14px}
@@ -535,7 +535,7 @@ function build(c){const d=document.createElement('div');const st=c.atk!=null&&c.
  <div class="name"><div class="t">${esc(c.name)}</div><div class="gems">${gems(c.cost)}</div></div>
  <div class="type"><span>${esc((c.subtype||c.type).replace(/\s*—\s*/g,' - '))}</span></div><div class="rar r-${c.rarity} e-${c.el}"${dl?` style="--rL:${RING[c.el]};--rR:${RING[c.el2]}"`:''}></div>
  ${st?`<div class="atk">${c.atk}</div><div class="hp">${c.hp}</div>`:''}
- <div class="rules">${esc(c.text||'')}</div>${c.aeSlots?`<div class="ae-slots">${'<div class="ae-strip"></div>'.repeat(c.aeSlots)}</div>`:''}<div class="slot"></div>`;
+ <div class="rules">${esc(c.text||'')}</div>${c.aeSlots>1?'<div class="slot slot-extra"></div>':''}<div class="slot"></div>`;
  d.onclick=()=>zoom(c);return d}
 function fit(card){{const t=card.querySelector('.type span');if(t&&t.clientWidth){let z=3.2;t.style.fontSize='';while(t.scrollWidth>t.clientWidth+1&&z>2.4){z-=.1;t.style.fontSize=z.toFixed(2)+'cqw';}}}const r=card.querySelector('.rules');if(!r||!r.clientHeight)return;let s=3.87;r.style.fontSize=s+'cqw';
  while(r.scrollHeight>r.clientHeight+1&&s>1.8){s-=.1;r.style.fontSize=s+'cqw'}
