@@ -76,6 +76,7 @@ h2{color:#f0d080;letter-spacing:.08em}
 .card.dual .rar{box-shadow:inset 0 -.6cqw 1cqw rgba(0,0,0,.3),inset 0 .5cqw .8cqw rgba(255,255,255,.3)!important;overflow:visible}
 .card.dual .rar::before{content:"";position:absolute;inset:-1.05cqw;border-radius:1.9cqw;padding:.7cqw;box-sizing:border-box;background:linear-gradient(90deg,var(--rL) calc(50% - .3cqw),var(--sg) calc(50% - .3cqw) calc(50% + .3cqw),var(--rR) calc(50% + .3cqw));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
 .card.dual .tab.n2{gap:1.3cqw}.card.dual .tab::after{content:"";position:absolute;left:50%;top:0;bottom:.45cqw;width:var(--seam);transform:translateX(-50%);background:linear-gradient(90deg,rgba(0,0,0,.45),var(--sg) 25%,#d4d8dc 50%,var(--sg) 75%,rgba(0,0,0,.45));z-index:-1}
+/*Set 2 symbol: numeral in the Arrival symbol slot*/.card .rar.set2::after{background-image:none!important;filter:none!important;content:"2";inset:0;display:flex;align-items:center;justify-content:center;font-family:Cinzel,serif;font-weight:700;font-size:5.2cqw;line-height:1;letter-spacing:0;color:#d08040;text-shadow:0 0 .2cqw rgba(0,0,0,.9)}.card .rar.set2.r-U::after{color:#e8eaee}.card .rar.set2.r-R::after,.card .rar.set2.r-M::after{color:#f0c030}
 /*set switcher*/#fs .sbtn{font-size:11px;padding:10px 14px}#fs .sbtn.active{color:#f0d080;border-color:rgba(240,208,128,.45)}
 </style></head><body>
 <header class="hd"><div class="eyebrow">Land of Elements</div><h1>JITHSUR</h1><div class="tagline">Card Catalog</div><div class="rule"></div></header>
@@ -547,7 +548,7 @@ function build(c){const d=document.createElement('div');const st=c.atk!=null&&c.
  const dl=!!c.el2;if(dl)d.className+=' dual';
  d.innerHTML=`<img class="frame" src="${frameFile(c.el,st,c.name)}"><img class="fr2" src="${frameFile(c.el,st,c.name)}"><img class="fr3" src="${frameFile(c.el,st,c.name)}">${dl?`<img class="frame fR" src="${frameFile(c.el2,st,c.name)}"><div class="seam"></div><img class="fr2 fR" src="${frameFile(c.el2,st,c.name)}"><div class="seam s2"></div>`:''}${tab(c)}<img class="art${c.name==='Convergence Elemental'?' art-top':''}" loading="lazy" src="${(window.ART_MAP||{})[c.name]||''}" alt="">
  <div class="name"><div class="t">${esc(c.name)}</div><div class="gems">${gems(c.cost)}</div></div>
- <div class="type"><span>${esc((c.subtype||c.type).replace(/\s*—\s*/g,' - '))}</span></div><div class="rar r-${c.rarity} e-${c.el}"${dl?` style="--rL:${RING[c.el]};--rR:${RING[c.el2]}"`:''}></div>
+ <div class="type"><span>${esc((c.subtype||c.type).replace(/\s*—\s*/g,' - '))}</span></div><div class="rar r-${c.rarity} e-${c.el}${c.set==='Set 2'?' set2':''}"${dl?` style="--rL:${RING[c.el]};--rR:${RING[c.el2]}"`:''}></div>
  ${st?`<div class="atk">${c.atk}</div><div class="hp">${c.hp}</div>`:''}
  <div class="rules">${esc(c.text||'')}</div>${c.aeSlots>1?'<div class="slot slot-extra"></div>':''}<div class="slot"></div>`;
  d.onclick=()=>zoom(c);return d}
