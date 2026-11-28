@@ -26,6 +26,10 @@ select,input{font-size:15px;padding:6px;background:#26262e;color:#eee;border:1px
 .gems{display:flex;flex-shrink:0;gap:.53cqw;padding-right:1.5cqw}
 .gem{width:auto;min-width:6.4cqw;padding:0 .9cqw 0 1.1cqw;gap:.35cqw;height:6.4cqw;border-radius:3.2cqw;display:flex;align-items:center;justify-content:center;font-family:Cinzel;font-weight:700;font-size:3.5cqw;color:#fff;text-shadow:0 0 .3cqw #000,0 0 .3cqw #000;border:.35cqw solid rgba(0,0,0,.55);box-sizing:border-box;box-shadow:inset 0 -.6cqw 1cqw rgba(0,0,0,.3),inset 0 .5cqw .8cqw rgba(255,255,255,.35)}
 .g-Fire{background:#ff7a1e}.g-Water{background:#2878dc}.g-Earth{background:#966432}.g-Wind{background:#6eb4eb}.g-Radiant{background:#f2c228}.g-Decay{background:#6a2a96;border-color:#8edc28}.g-None{background:#aab0b6}
+.rules .gem{display:inline-flex;vertical-align:-.16em;width:auto;min-width:1.12em;height:1.12em;padding:0 .16em 0 .18em;gap:.04em;margin:0 .05em;border-radius:999px;border-width:.05em;box-shadow:inset 0 -.12em .18em rgba(0,0,0,.3),inset 0 .1em .14em rgba(255,255,255,.35);font-size:1em;line-height:1}
+.rules .gem>span{font-size:.72em;line-height:1}
+.rules .gem .gs{font-size:.78em;line-height:1;filter:drop-shadow(0 0 .08em rgba(0,0,0,.8))}
+
 .type{left:4.667%;top:46.905%;width:90.667%;height:5.238%;z-index:3;display:flex;align-items:center;font-family:Cinzel;font-weight:600;font-size:3.2cqw;color:#1c1612;padding-left:2.33cqw;box-sizing:border-box;white-space:nowrap;overflow:hidden}
 .rar{left:91.33%;top:49.52%;width:1.6cqw;height:1.6cqw;transform:translate(-50%,-50%) rotate(45deg);z-index:4;border:.12cqw solid #000}
 .r-C{background:#222}.r-U{background:#bec8d2}.r-R{background:#e6b432}.r-M{background:#dc5028}
@@ -557,6 +561,9 @@ const FR={None:'neutral'};const PALE=['The Pale Wanderer','The Pale Reflection',
 const ICON={'🔥':'Fire','🌊':'Water','🪨':'Earth','💨':'Wind','✨':'Radiant','🦴':'Decay','🔘':'None'};
 const ELN=e=>e==='None'?'Neutral':e;
 const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+function costGem(sign,n,emo){const el=ICON[emo.replace('\uFE0F','')]||'None';return `<span class="gem g-${el}"><span>${sign}${n}</span><span class="gs">${emo}</span></span>`}
+function rulesHtml(text){const re=/(\+?)(\d+)\s*(\p{Extended_Pictographic}\uFE0F?)/gu;let out='',last=0,m,s=String(text||'');while(m=re.exec(s)){out+=esc(s.slice(last,m.index))+costGem(m[1],m[2],m[3]);last=re.lastIndex}return out+esc(s.slice(last))}
 function gems(cost){const out=[];const re=/(\+?)(\d+)\s*(\p{Extended_Pictographic}\uFE0F?)/gu;let m;while(m=re.exec(String(cost))){out.push(`<div class="gem g-${ICON[m[3].replace('\uFE0F','')]||'None'}"><span>${m[1]}${m[2]}</span><span class="gs">${m[3]}</span></div>`)}return out.join('')}
 const EMO=Object.fromEntries(Object.entries(ICON).map(([k,v])=>[v,k]));const TB={Fire:'#ff7a1e',Water:'#2878dc',Earth:'#966432',Wind:'#6eb4eb',Radiant:'#f2c228',Decay:'#8edc28',None:'#aab0b6'};
 function els(c){const L=[];const add=e=>{if(e&&EMO[e]&&!L.includes(e))L.push(e)};add(c.el);String(c.dualResource||'').split('+').forEach(x=>add(x.trim()));(String(c.cost||'').match(/\p{Extended_Pictographic}/gu)||[]).forEach(e=>{const n=ICON[e];if(n&&n!=='None')add(n)});if(L.length>1)L.splice(L.indexOf('None')>>>0,L.includes('None')?1:0);return L}
@@ -569,7 +576,7 @@ function build(c){const d=document.createElement('div');const st=c.atk!=null&&c.
  <div class="name"><div class="t">${esc(c.name)}</div><div class="gems">${gems(c.cost)}</div></div>
  <div class="type"><span>${esc((c.subtype||c.type).replace(/\s*—\s*/g,' - '))}</span></div><div class="rar r-${c.rarity} e-${c.el}${c.set==='Set 2'?' set2':''}"${dl?` style="--rL:${RING[c.el]};--rR:${RING[c.el2]}"`:''}></div>
  ${st?`<div class="atk">${c.atk}</div><div class="hp">${c.hp}</div>`:''}
- <div class="rules">${esc(c.text||'')}</div>${c.aeSlots>1?'<div class="slot slot-extra"></div>':''}<div class="slot"></div>`;
+ <div class="rules">${c.name==='Allblight Doomsayer'?rulesHtml(c.text||''):esc(c.text||'')}</div>${c.aeSlots>1?'<div class="slot slot-extra"></div>':''}<div class="slot"></div>`;
  d.onclick=()=>zoom(c);return d}
 function fit(card){{const t=card.querySelector('.type span');if(t&&t.clientWidth){let z=3.2;t.style.fontSize='';while(t.scrollWidth>t.clientWidth+1&&z>2.4){z-=.1;t.style.fontSize=z.toFixed(2)+'cqw';}}}const r=card.querySelector('.rules');if(!r||!r.clientHeight)return;let s=3.87;r.style.fontSize=s+'cqw';
  while(r.scrollHeight>r.clientHeight+1&&s>1.8){s-=.1;r.style.fontSize=s+'cqw'}
