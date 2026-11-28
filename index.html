@@ -576,7 +576,7 @@ function build(c){const d=document.createElement('div');const st=c.atk!=null&&c.
  <div class="name"><div class="t">${esc(c.name)}</div><div class="gems">${gems(c.cost)}</div></div>
  <div class="type"><span>${esc((c.subtype||c.type).replace(/\s*—\s*/g,' - '))}</span></div><div class="rar r-${c.rarity} e-${c.el}${c.set==='Set 2'?' set2':''}"${dl?` style="--rL:${RING[c.el]};--rR:${RING[c.el2]}"`:''}></div>
  ${st?`<div class="atk">${c.atk}</div><div class="hp">${c.hp}</div>`:''}
- <div class="rules">${c.name==='Allblight Doomsayer'?rulesHtml(c.text||''):esc(c.text||'')}</div>${c.aeSlots>1?'<div class="slot slot-extra"></div>':''}<div class="slot"></div>`;
+ <div class="rules">${rulesHtml(c.text||'')}</div>${c.aeSlots>1?'<div class="slot slot-extra"></div>':''}<div class="slot"></div>`;
  d.onclick=()=>zoom(c);return d}
 function fit(card){{const t=card.querySelector('.type span');if(t&&t.clientWidth){let z=3.2;t.style.fontSize='';while(t.scrollWidth>t.clientWidth+1&&z>2.4){z-=.1;t.style.fontSize=z.toFixed(2)+'cqw';}}}const r=card.querySelector('.rules');if(!r||!r.clientHeight)return;let s=3.87;r.style.fontSize=s+'cqw';
  while(r.scrollHeight>r.clientHeight+1&&s>1.8){s-=.1;r.style.fontSize=s+'cqw'}
